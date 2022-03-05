@@ -1,5 +1,7 @@
 import { Env } from '@config/env';
+import { TransformResponseInterceptor } from '@core/interceptors';
 import { setupSwagger } from '@core/setup';
+import { ValidationPipe, VersioningType } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { NestFactory } from '@nestjs/core';
 
@@ -9,6 +11,14 @@ async function bootstrap() {
 	const app = await NestFactory.create(AppModule);
 
 	setupSwagger(app);
+
+	app.setGlobalPrefix('api', { exclude: ['docs'] });
+	app.useGlobalPipes(new ValidationPipe({ transform: true }));
+	app.useGlobalInterceptors(new TransformResponseInterceptor());
+	app.enableVersioning({
+		type: VersioningType.URI,
+		defaultVersion: '1',
+	});
 
 	const configService: ConfigService<Env> = app.get(ConfigService);
 	const port = configService.get<number>('PORT') || 3000;
