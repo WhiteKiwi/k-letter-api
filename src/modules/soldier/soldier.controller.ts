@@ -4,7 +4,10 @@ import { v4 as uuidV4 } from 'uuid';
 import { Docs } from './soldier.docs';
 import { RegisterSoldierDto, RegisterSoldierResponseDto } from './soldier.dto';
 
-@Controller('soldiers')
+@Controller({
+	version: '1',
+	path: 'soldiers',
+})
 export class SoldierController {
 	@Docs.RegisterSoldier()
 	@HttpCode(HttpStatus.CREATED)

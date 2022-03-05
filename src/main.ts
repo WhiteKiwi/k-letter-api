@@ -1,7 +1,12 @@
 import { Env } from '@config/env';
 import { TransformResponseInterceptor } from '@core/interceptors';
 import { setupSwagger } from '@core/setup';
-import { ValidationPipe, VersioningType } from '@nestjs/common';
+import {
+	RequestMethod,
+	ValidationPipe,
+	VERSION_NEUTRAL,
+	VersioningType,
+} from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { NestFactory } from '@nestjs/core';
 
@@ -12,12 +17,20 @@ async function bootstrap() {
 
 	setupSwagger(app);
 
-	app.setGlobalPrefix('api', { exclude: ['docs'] });
+	app.setGlobalPrefix('api', {
+		exclude: [
+			'docs',
+			{
+				method: RequestMethod.GET,
+				path: 'health-check',
+			},
+		],
+	});
 	app.useGlobalPipes(new ValidationPipe({ transform: true }));
 	app.useGlobalInterceptors(new TransformResponseInterceptor());
 	app.enableVersioning({
 		type: VersioningType.URI,
-		defaultVersion: '1',
+		defaultVersion: VERSION_NEUTRAL,
 	});
 
 	const configService: ConfigService<Env> = app.get(ConfigService);
