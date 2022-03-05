@@ -68,6 +68,8 @@ export class RegisterSoldierDto {
 }
 
 export class RegisterSoldierResponseDto {
-	@ApiProperty({ description: 'soldier id' })
+	@ApiProperty({
+		example: 'ece39985-76f4-40ab-bd31-7284b43c0f46',
+	})
 	soldierId!: string;
 }
