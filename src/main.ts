@@ -15,8 +15,6 @@ import { AppModule } from './app.module';
 async function bootstrap() {
 	const app = await NestFactory.create(AppModule);
 
-	setupSwagger(app);
-
 	app.setGlobalPrefix('api', {
 		exclude: [
 			'docs',
@@ -32,6 +30,8 @@ async function bootstrap() {
 		type: VersioningType.URI,
 		defaultVersion: VERSION_NEUTRAL,
 	});
+
+	setupSwagger(app);
 
 	const configService: ConfigService<Env> = app.get(ConfigService);
 	const port = configService.get<number>('PORT') || 3000;
