@@ -21,6 +21,7 @@ export function setupSwagger(
 	const options = new DocumentBuilder()
 		.setTitle('K-Letter API Docs')
 		.setVersion('0.0.1')
+		.addBearerAuth()
 		.build();
 
 	const document = SwaggerModule.createDocument(app, options);
