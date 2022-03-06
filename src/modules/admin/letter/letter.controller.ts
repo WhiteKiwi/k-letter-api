@@ -1,8 +1,20 @@
-import { Controller, Get, Post, Query } from '@nestjs/common';
+import {
+	Controller,
+	Get,
+	HttpCode,
+	HttpStatus,
+	Post,
+	Query,
+} from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 
 import { Docs } from '../../../core/decorators';
-import { FindLetterDto, FindLetterResponseDto } from './letter.dto';
+import {
+	AgreeLetterDto,
+	FindLetterDto,
+	FindLetterResponseDto,
+	RejectLetterDto,
+} from './letter.dto';
 
 @ApiTags('admin')
 @Controller('admin/letters')
@@ -42,9 +54,27 @@ export class LetterController {
 		];
 	}
 
+	@Docs('편지 승인', {
+		description: '편지 발송을 승인합니다',
+		body: { type: AgreeLetterDto },
+		responses: {
+			status: HttpStatus.NO_CONTENT,
+			description: '성공 리스폰스 없음 (empty)',
+		},
+	})
+	@HttpCode(HttpStatus.NO_CONTENT)
 	@Post('agree')
-	agree() {}
+	agree(): void {}
 
+	@Docs('편지 거부', {
+		description: '편지 발송을 거부합니다',
+		body: { type: RejectLetterDto },
+		responses: {
+			status: HttpStatus.NO_CONTENT,
+			description: '성공 리스폰스 없음 (empty)',
+		},
+	})
+	@HttpCode(HttpStatus.NO_CONTENT)
 	@Post('reject')
-	reject() {}
+	reject(): void {}
 }

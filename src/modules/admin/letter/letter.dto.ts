@@ -25,3 +25,13 @@ export class FindLetterResponseDto {
 	@ApiProperty({ example: '내용내용내용' })
 	내용!: string;
 }
+
+export class AgreeLetterDto {
+	@ApiProperty()
+	id!: number;
+}
+
+export class RejectLetterDto {
+	@ApiProperty()
+	id!: number;
+}
