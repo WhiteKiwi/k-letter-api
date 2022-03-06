@@ -14,6 +14,7 @@ import { AppModule } from './app.module';
 
 async function bootstrap() {
 	const app = await NestFactory.create(AppModule);
+	const configService: ConfigService<Env> = app.get(ConfigService);
 
 	app.setGlobalPrefix('api', {
 		exclude: [
@@ -31,9 +32,8 @@ async function bootstrap() {
 		defaultVersion: VERSION_NEUTRAL,
 	});
 
-	setupSwagger(app);
+	setupSwagger(app, configService);
 
-	const configService: ConfigService<Env> = app.get(ConfigService);
 	const port = configService.get<number>('PORT') || 3000;
 	await app.listen(port, () => {
 		console.log(`SERVER LISTENING ON port ${port}`);
