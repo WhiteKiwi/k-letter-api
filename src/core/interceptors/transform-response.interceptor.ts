@@ -19,6 +19,6 @@ export class TransformResponseInterceptor<T>
 	}
 }
 
-interface Response<T> {
-	data: T;
+export class Response<T> {
+	data!: T;
 }
