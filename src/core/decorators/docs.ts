@@ -6,12 +6,10 @@ import {
 	ApiResponse,
 } from '@nestjs/swagger';
 
-export function Docs({
-	summary,
-	description,
-	body,
-	responses,
-}: DocsParams): MethodDecorator {
+export function Docs(
+	summary: string,
+	{ description, body, responses }: DocsParams,
+): MethodDecorator {
 	const decorators: Array<MethodDecorator> = [];
 	decorators.push(ApiOperation({ summary, description }));
 	if (body) decorators.push(ApiBody({ type: body.type }));
@@ -22,7 +20,7 @@ export function Docs({
 				ApiResponse({
 					status: response.status,
 					description: response.description,
-					type: makeResponse(response.type),
+					type: makeResponse(response.type, response.isArray),
 				}),
 			);
 		}
@@ -31,7 +29,6 @@ export function Docs({
 	return applyDecorators(...decorators);
 }
 interface DocsParams {
-	summary: string;
 	description?: string;
 	body?: {
 		type?: Type<unknown> | Function | [Function] | string;
@@ -43,13 +40,14 @@ interface ResponseDoc {
 	status?: number;
 	description?: string;
 	type?: Type<unknown>;
+	isArray?: boolean;
 }
 
-function makeResponse(type?: Type<unknown>) {
+function makeResponse(type?: Type<unknown>, isArray?: boolean) {
 	if (!type) return;
 
 	class Response {
-		@ApiProperty({ type })
+		@ApiProperty({ type, isArray })
 		data!: unknown;
 	}
 	return Response;

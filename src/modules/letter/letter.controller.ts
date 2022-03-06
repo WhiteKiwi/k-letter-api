@@ -8,8 +8,7 @@ import { SendLetterDto } from './letter.dto';
 	path: 'letters',
 })
 export class LetterController {
-	@Docs({
-		summary: '편지 발송 요청',
+	@Docs('편지 발송 요청', {
 		description: '편지 발송을 요청합니다.',
 		responses: {
 			status: HttpStatus.NO_CONTENT,

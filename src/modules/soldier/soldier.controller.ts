@@ -9,8 +9,7 @@ import { RegisterSoldierDto, RegisterSoldierResponseDto } from './soldier.dto';
 	path: 'soldiers',
 })
 export class SoldierController {
-	@Docs({
-		summary: '군인 등록',
+	@Docs('군인 등록', {
 		description: '군인을 등록합니다.',
 		body: {
 			type: RegisterSoldierDto,
