@@ -1,3 +1,4 @@
+import { Docs } from '@core/decorators';
 import {
 	Controller,
 	Get,
@@ -5,10 +6,11 @@ import {
 	HttpStatus,
 	Post,
 	Query,
+	UseGuards,
 } from '@nestjs/common';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 
-import { Docs } from '../../../core/decorators';
+import { JwtAuthGuard } from '../auth';
 import {
 	AgreeLetterDto,
 	FindLetterDto,
@@ -16,8 +18,13 @@ import {
 	RejectLetterDto,
 } from './letter.dto';
 
-@ApiTags('admin')
-@Controller('admin/letters')
+@ApiBearerAuth()
+@ApiTags('admin/letters')
+@UseGuards(JwtAuthGuard)
+@Controller({
+	version: '1',
+	path: 'admin/letters',
+})
 export class LetterController {
 	@Docs('편지 요청 건 목록 조회', {
 		description: '편지 요청 건 목록들을 조회합니다',
