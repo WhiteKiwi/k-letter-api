@@ -13,8 +13,8 @@ import { AuthService } from './auth.service';
 export class AuthController {
 	constructor(private readonly authService: AuthService) {}
 
-	@Docs('로그인해서 토큰을 받아옵니다', {
-		description: 'Bearer Token으로 쓰면 됨',
+	@Docs('로그인', {
+		description: 'Authorization 헤더에 `Bearer ${accessToken}`해서 쓰면 됨',
 		body: {
 			type: AuthLoginDto,
 		},
