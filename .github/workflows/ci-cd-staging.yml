@@ -42,7 +42,7 @@ jobs:
     runs-on: ubuntu-latest
     environment:
       name: develop
-      url: https://k-letter-api.dev.whitekiwi-test.com
+      url: https://k-letter-api.dev.whitekiwi.link
 
     steps:
       - name: Checkout
